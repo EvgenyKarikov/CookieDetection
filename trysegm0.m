@@ -2,7 +2,7 @@ clear all;
 close all;
 clc;
 
-gTruth=open('yolo_gTruth.mat');
+gTruth=open('mask_gTruth.mat');
 
 net = mobilenetv2();
 lgraph = layerGraph(net);
@@ -38,7 +38,7 @@ anchorBoxes = [
     ];
 
 numAnchors = size(anchorBoxes,1);
-numPredictionsPerAnchor = 5;
+numPredictionsPerAnchor = 2;
 numFiltersInLastConvLayer = numAnchors*(numClasses+numPredictionsPerAnchor);
 
 detectionLayers = [
@@ -52,7 +52,7 @@ detectionLayers = [
 lgraph = addLayers(lgraph,detectionLayers);
 lgraph = connectLayers(lgraph,featureExtractionLayer,"yolov2Conv1");
 
-[imds,blds] = objectDetectorTrainingData(gTruth.gTruth);
+[imds,blds] = pixelLabelTrainingData(gTruth.gTruth);
 
 cds = combine(imds,blds);
 
