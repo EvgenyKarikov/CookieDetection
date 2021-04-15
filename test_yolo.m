@@ -12,7 +12,7 @@ for i=1:sz(1)
     test_img = readimage(imds,img_num);
 
     [box, score, label] = detect(detector,test_img);
-    detectedimg = insertObjectAnnotation(test_img,'Rectangle',box,label);
+    detectedimg = insertObjectAnnotation(test_img,'Rectangle',box,string(label)+': '+score);
     imwrite(detectedimg,savepath+string(i)+'.jpg')
     %imshow(detectedimg);
 end
